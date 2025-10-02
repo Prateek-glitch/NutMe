@@ -1,0 +1,5 @@
+# Prevent direct listing; allow images served if needed
+Options -Indexes
+<FilesMatch "\.(php|php\d+)$">
+  Deny from all
+</FilesMatch>

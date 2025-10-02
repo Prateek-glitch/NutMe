@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <title>NutMe - Playful Roast AI</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+
+  <!-- Primary SEO -->
+  <meta name="description" content="NutMe: Upload a face and get a witty, lighthearted AI roast. No hate or slurs — just fun energy." />
+  <meta name="keywords" content="NutMe, AI roast, playful roast, photo roast, fun AI, lighthearted humor" />
+  <link rel="canonical" href="https://example.com/" />
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:site_name" content="NutMe" />
+  <meta property="og:title" content="NutMe – Playful AI Roast Generator" />
+  <meta property="og:description" content="Upload a face and get a witty, lighthearted AI roast. No hate or slurs — just fun energy." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="logo.png" />
+  <meta property="og:image:secure_url" content="https://example.com/logo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+  <meta property="og:image:alt" content="NutMe logo" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Cards -->
+  <!-- Use summary_large_image if you later create a 1200x630 social card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="NutMe – Playful AI Roast Generator" />
+  <meta name="twitter:description" content="Upload a face and get a witty, lighthearted AI roast." />
+  <meta name="twitter:image" content="logo.png" />
+  <meta name="twitter:image:alt" content="NutMe logo" />
+  <!-- Optional: your handle -->
+  <!-- <meta name="twitter:site" content="@YourHandle" /> -->
+
+  <!-- Favicons / App Icons (optional - add files if you have them) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+  <meta name="theme-color" content="#0d0d0e" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "NutMe",
+    "url": "https://example.com/",
+    "description": "Upload a face and receive a witty, lighthearted AI roast. No hate or slurs — just playful energy.",
+    "applicationCategory": "EntertainmentApplication",
+    "operatingSystem": "Any",
+    "image": "https://example.com/logo.png",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Organization",
+      "name": "NutMe"
+    }
+  }
+  </script>
+
+  <!-- Preload / Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/custom.css" />
+</head>
+<body class="min-h-full bg-body font-inter text-neutral-200 selection:bg-accent/40 selection:text-white">
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container-global h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-5 min-w-0">
+        <a href="./" class="brand-logo group" aria-label="NutMe Home">
+          <span class="brand-part nut">Nut</span><span class="brand-part me">Me</span>
+        </a>
+        <div class="hidden md:flex items-center gap-3 text-[12px] text-neutral-400">
+          <span class="inline-flex items-center gap-1">
+            <span class="h-1.5 w-1.5 rounded-full bg-accent animate-pulse-glow"></span>
+            Ready
+          </span>
+          <span class="divider-vert"></span>
+          <button id="compactToggle" class="pill-btn-pill" type="button" aria-pressed="false">Compact: Off</button>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="toggle-theme-btn" title="Toggle Light/Dark" aria-label="Toggle theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m18.364 7.364-1.414-1.414M6.05 6.05 4.636 4.636m12.728 0-1.414 1.414M6.05 17.95l-1.414 1.414"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+  <div id="liveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main -->
+  <main id="main" class="container-global pt-6 pb-28 space-y-8">
+    <section class="panel p-block panel-main" id="uploadSection">
+      <div class="panel-head">
+        <h1 class="panel-title">
+          <span class="accent-bar"></span>
+          Roast Console
+        </h1>
+        <p class="panel-subtext">
+          Upload a face & get a playful roast. Intensity only changes energy & creativity—never cruelty.
+        </p>
+      </div>
+
+      <form id="roastForm" class="space-y-var form-grid" enctype="multipart/form-data" role="form" aria-describedby="formHelp">
+        <div class="field-group">
+          <label for="photo" class="field-label">Image</label>
+          <div id="dropZone" class="upload-box group" tabindex="0" role="button" aria-label="Select or drop an image">
+            <div id="previewWrapper" class="preview-wrapper">
+              <img id="previewImage" alt="Uploaded preview" class="hidden object-cover w-full h-full" />
+              <div id="previewPlaceholder" class="preview-placeholder">
+                <svg width="44" height="44" viewBox="0 0 24 24" stroke-width="1.3" stroke="currentColor" fill="none" class="mx-auto mb-2 text-neutral-500 group-hover:text-accent transition-colors">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-8m-4 4h8M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M4 12V6a2 2 0 0 1 2-2h5.172a2 2 0 0 1 1.414.586l5.828 5.828A2 2 0 0 1 19 12v0" />
+                </svg>
+                <span class="block font-semibold text-sm text-white">Tap or Drop</span>
+                <span class="text-[11px] text-neutral-500">JPG / PNG / WEBP (max 4MB)</span>
+              </div>
+            </div>
+            <input type="file" id="photo" name="photo" accept="image/*" class="hidden" required />
+          </div>
+          <div id="uploadMeta" class="file-meta" aria-hidden="true" hidden></div>
+          <p id="formHelp" class="assist-text">
+            Drag & drop or click to select an image. Stored locally (uploads/).
+          </p>
+        </div>
+
+        <div class="field-group">
+          <label for="userContext" class="field-label">
+            Optional Vibe / Context <span class="hint">(improves humor)</span>
+          </label>
+          <textarea
+            id="userContext"
+            name="userContext"
+            rows="3"
+            placeholder="e.g. 'Post-exam face', 'Pro gamer vibe', 'Just woke up look'"
+            class="input-field resize-none"
+          ></textarea>
+        </div>
+
+        <fieldset class="field-group chip-field" id="intensityFieldset">
+          <legend class="field-label with-frame-title">Intensity</legend>
+          <div class="intensity-scroller" id="intensityGroup" aria-label="Select intensity" role="radiogroup">
+            <label class="intensity-pill" role="radio" aria-selected="true">
+              <input type="radio" name="intensity" value="mild" checked />
+              <span>Mild</span>
+            </label>
+            <label class="intensity-pill" role="radio" aria-selected="false">
+              <input type="radio" name="intensity" value="spicy" />
+              <span>Spicy</span>
+            </label>
+            <label class="intensity-pill" role="radio" aria-selected="false">
+              <input type="radio" name="intensity" value="chaotic" />
+              <span>Chaotic</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="field-group consent-box">
+          <label class="consent-label">
+            <input type="checkbox" id="consentBox" class="consent-input" />
+            <span class="check-ui" aria-hidden="true"></span>
+            <span>I confirm this is my image and I want playful, non-abusive humor.</span>
+          </label>
+        </div>
+
+        <div class="action-row">
+          <button type="submit" id="submitBtn" class="btn-accent relative" disabled>
+            <span class="submit-text">Roast Me</span>
+            <span class="hidden spinner w-4 h-4 border-2 border-neutral-700 border-t-white rounded-full"></span>
+          </button>
+          <button type="button" id="regenBtn" class="btn-neutral" disabled>Regenerate</button>
+          <button type="button" id="resetBtn" class="btn-tertiary">Reset</button>
+        </div>
+
+        <div id="progressBarContainer" class="hidden">
+          <div class="progress-track">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </div>
+      </form>
+
+      <details id="tipsDetails" class="tips-block" open>
+        <summary class="tips-summary">Tips & Safety</summary>
+        <div class="tips-content">
+          <ul class="tips-list">
+            <li>Humor stays observational & creative (no slurs or explicit insults).</li>
+            <li>Add a short context to steer tone.</li>
+            <li>“Chaotic” = faster metaphors, not aggression.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <section id="resultSection" class="panel p-block space-y-var hidden" aria-live="polite">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h2 class="panel-title-sm">
+          <span class="accent-bar-small"></span>
+          Roast Result
+        </h2>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button id="copyBtn" class="pill-btn" type="button" disabled>Copy</button>
+          <button id="collapseTipsBtn" class="pill-btn" type="button">Hide Tips</button>
+        </div>
+      </div>
+
+      <div id="roastOutput" class="roast-box font-mono text-sm leading-relaxed whitespace-pre-wrap" aria-label="Roast output">
+        <div class="skeleton-lines" id="skeletonLoader" hidden></div>
+      </div>
+
+      <div id="modelTag" class="model-tag" hidden></div>
+    </section>
+  </main>
+
+  <div id="stickyBar" class="sticky-bar hidden" aria-label="Quick actions">
+    <div class="sticky-inner">
+      <button id="stickyRegen" class="btn-accent btn-slim" disabled>Regenerate</button>
+      <button id="stickyCopy" class="btn-outline btn-slim" disabled>Copy</button>
+      <button id="stickyTop" class="btn-neutral btn-slim" aria-label="Scroll to top">Top</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container-global text-[11px] text-neutral-500 flex flex-col sm:flex-row items-start sm:items-center gap-2 justify-between">
+      <span>NutMe © <span id="year"></span>. Playful AI humor only.</span>
+      <span class="text-neutral-600">Contrast-friendly UI • No abusive language produced.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+
+# Environment & secrets
+.env
+
+# Uploads (keep .htaccess if present)
+uploads/*
+!uploads/.htaccess
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Node related (if you later add tooling)
+node_modules/
+dist/
+EOF
