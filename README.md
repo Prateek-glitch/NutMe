@@ -301,7 +301,7 @@ Recommend **MIT** (add `LICENSE` file):
 
 ## 📣 Quick Share Snippet
 
-> NutMe – Upload a face (with consent) & get a playful AI roast. Safe, witty, no hate. https://example.com
+> NutMe – Upload a face (with consent) & get a playful AI roast. Safe, witty, no hate.
 
 ---
 
